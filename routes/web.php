@@ -6,15 +6,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AlbumController::class, 'publicAlbums'])->name('dashboard');
+Route::get('/public-albums', [AlbumController::class, 'publicAlbums'])->name('albums.public');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -38,9 +33,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    // Admin routes
     Route::get('/admin/albums', [AdminController::class, 'albums'])->name('admin.albums');
-    Route::get('/admin/photos', [AdminController::class, 'photos'])->name('admin.photos');
-    Route::delete('/admin/photos/{photo}', [AdminController::class, 'destroyPhoto'])->name('admin.photos.destroy');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::patch('/admin/users/{user}/update-role', [AdminController::class, 'updateRole'])->name('admin.users.updateRole');
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroyUser');
 });
 
 require __DIR__.'/auth.php';

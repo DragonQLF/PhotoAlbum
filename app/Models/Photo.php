@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Photo extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'path', 
@@ -20,7 +21,7 @@ class Photo extends Model
         return $this->belongsTo(Album::class);
     }
 
-    // Accessor para data formatada
+    // Accessor for formatted date
     public function getUploadedAtAttribute()
     {
         return $this->created_at ? $this->created_at->format('M d, Y \a\t h:i A') : null;

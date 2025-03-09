@@ -10,8 +10,12 @@ class Album extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected static $logAttributes = ['title', 'description'];
-    protected static $recordEvents = ['created', 'updated', 'deleted'];
+    protected $fillable = [
+        'title',
+        'description',
+        'user_id',
+        'is_public',
+    ];
 
     // Relationship with User (owner)
     public function user()

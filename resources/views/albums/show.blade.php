@@ -86,7 +86,7 @@
             <input type="hidden" id="photoId" name="photo_id">
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">
+                <label class="bg-white block text-gray-700 text-sm font-bold mb-2">
                     Photo Description
                 </label>
                 <textarea name="description" id="modalDescription"
